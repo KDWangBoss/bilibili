@@ -6,21 +6,31 @@
   <title>下载的流式传输</title>
 </head>
 <body>
+  <!-- 服务器设置文件头 
+   Content-Disposition: attachment; filename*=UTF-8''%E4%BD%A0%E5%A5%BD.txt
+   Content-Disposition: inline; filename="example.pdf" 直接在浏览器中显示
+   Content-Disposition: form-data; name="file"; filename="example.txt" 用于表单提交，指示内容是表单的一部分
+   -->
+  <!-- 文件大的时候适用于直接a标签点击的方式，浏览器在用户点击链接时会自动发送当前域的 cookie，此时可以根据cookie做权限校验 -->
+  <!-- <a href="https://example.com/file.txt">下载</a> -->
+  <!-- <a href="https://example.com/file.txt" download>下载</a> -->
   <button class="btn">下载</button>
 
   <script>
     var btn = document.querySelector('.btn');
     btn.onclick = async function() {
-      const resp = await fetch('', {
+      const resp = await fetch('https://github.com/KDWangBoss/duyi/blob/master/%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93/more10m.png', {
         headers: {
+          // 模拟权限登录获取图片
           authorization: `Bearer ${localStorage.getItem('token')}`
         }
       });
+      // 等待服务器传输到内存中，会有浏览器内存泄露问题，适用于小文件的处理
       const blob = await resp.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'logo.png';
+      a.download = 'banner.png';
       a.click();
       // 释放内存
       URL.revokeObjectURL(url);
@@ -28,7 +38,7 @@
     }
     // btn.addEventListener('click', () => {
     //   const xhr = new XMLHttpRequest();
-    //   xhr.open('GET', '');
+    //   xhr.open('GET', 'https://github.com/KDWangBoss/duyi/blob/master/%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93/more10m.png');
     //   xhr.responseType = 'blob';
     //   xhr.onload = function () {
     //     if (this.status === 200) {
