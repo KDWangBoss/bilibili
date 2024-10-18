@@ -19,10 +19,11 @@
   <script>
     var btn = document.querySelector('.btn');
     btn.onclick = async function() {
-      const resp = await fetch('https://github.com/KDWangBoss/duyi/blob/master/%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93/more10m.png', {
+      const resp = await fetch('https://github.com/KDWangBoss/duyi/blob/master/%E4%B8%8B%E8%BD%BD%E7%9A%84%E6%B5%81%E5%BC%8F%E4%BC%A0%E8%BE%93/more10m.png?raw=true', {
         headers: {
           // 模拟权限登录获取图片
-          authorization: `Bearer ${localStorage.getItem('token')}`
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+          mode: 'no-cors'
         }
       });
       // 等待服务器传输到内存中，会有浏览器内存泄露问题，适用于小文件的处理

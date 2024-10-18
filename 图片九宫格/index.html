@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片九宫格</title>
+</head>
+<body>
+  <div class="img-container">
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+    <div class="img-item"></div>
+  </div>
+
+  <style>
+    .img-container {
+      margin: auto;
+      width: 300px;
+      height: 300px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .img-item {
+      top: 20px;
+      transition: .5s;
+      background-size: 300px 300px;
+      background-image: url(./avatar4.jpeg);
+      position: relative;
+      background-position-y: -200px;
+    }
+    /* 设置第一列 */
+    .img-item:nth-child(3n + 1) {
+      left: -20px;
+      background-position-x: 0;
+    }
+    /* 设置第二列 */
+    .img-item:nth-child(3n + 2) {
+      left: 0;
+      background-position-x: -100px;
+    }
+    /* 设置第三列 */
+    .img-item:nth-child(3n) {
+      left: 20px;
+      background-position-x: -200px;
+    }
+    /* 设置第二行 */
+    .img-item:nth-child(-n + 6) {
+      top: 0;
+      background-position-y: -100px;
+    }
+    /* 设置第一行 */
+    .img-item:nth-child(-n + 3) {
+      top: -20px;
+      background-position-y: 0;
+    }
+
+    .img-container:hover .img-item {
+      top: 0;
+      left: 0;
+      box-shadow: inset 0 0 0 0 #fff;
+    }
+  </style>
+</body>
+</html>
