@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS电梯导航</title>
+</head>
+<body>
+  
+  <div id="rotate"></div>
+  <div id="scroll">
+    <div id="content"></div>
+  </div>
+
+  <style>
+    body {
+      timeline-scope: --rotate;
+    }
+
+    #scroll {
+      width: 700px;
+      height: 700px;
+      background-color: #ccc;
+      float: right;
+      overflow: scroll;
+      scroll-timeline-name: --rotate;
+    }
+
+    #rotate {
+      width: 200px;
+      height: 200px;
+      background-color: red;
+      margin-top: 100px;
+      border-radius: 20px;
+      float: left;
+      animation: rotate forwards;
+      animation-timeline: --rotate;
+    }
+
+    #content {
+      width: 100%;
+      height: 1500px;
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: translateX(0px) rotate(0deg);
+      }
+
+      100% {
+        transform: translateX(1000px) rotate(360deg);
+      }
+    }
+  </style>
+</body>
+</html>
