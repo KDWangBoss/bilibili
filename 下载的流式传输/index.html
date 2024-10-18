@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>下载的流式传输</title>
+</head>
+<body>
+  <button class="btn">下载</button>
+
+  <script>
+    var btn = document.querySelector('.btn');
+    btn.onclick = async function() {
+      const resp = await fetch('', {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      const blob = await resp.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'logo.png';
+      a.click();
+      // 释放内存
+      URL.revokeObjectURL(url);
+      
+    }
+    // btn.addEventListener('click', () => {
+    //   const xhr = new XMLHttpRequest();
+    //   xhr.open('GET', '');
+    //   xhr.responseType = 'blob';
+    //   xhr.onload = function () {
+    //     if (this.status === 200) {
+    //       const blob = this.response;
+    //       const url = URL.createObjectURL(blob);
+    //       const a = document.createElement('a');
+    //       a.href = url;
+    //       a.download = 'logo.png';
+    //       a.click();
+    //       URL.revokeObjectURL(url);
+    //     }
+    //   }
+    //   xhr.send();
+    // })
+  </script>
+</body>
+</html>
