@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>解决canvas清晰度的问题</title>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <style>
+    canvas {
+      width: 800px;
+      height: 800px;
+      background: #000;
+    }
+  </style>
+  <script>
+    // 图片的原始尺寸 naturalWidth naturalHeight
+    // 图片的样式尺寸 width height
+    // 缩放倍率（dpr）devicePixelRatio
+    // 保持原始尺寸 = 样式尺寸 * 缩放倍率后图片是清晰的
+    const cvs = document.getElementById('canvas')
+    const ctx = cvs.getContext('2d')
+    draw()
+
+    // 画图
+    function draw() {
+      cvs.width = 800
+      cvs.height = 800
+      // 清除画板
+      ctx.clearRect(0, 0, cvs.width, cvs.height)
+      // 有缩放倍率
+      drawCircle(800, 800, devicePixelRatio)
+      // 无缩放倍率
+      drawCircle(800, 800)
+    }
+    // 画圆
+    function drawCircle(x, y, dpr = 1) {
+      ctx.beginPath()
+      const r = 80 * dpr
+      ctx.arc(x / 2 * dpr, y / 2 * dpr, r * dpr, 0, 2 * Math.PI)
+      ctx.strokeStyle = '#fff'
+      ctx.lineWidth = 10 * dpr
+      ctx.stroke()
+    }
+  </script>
+</body>
+</html>
