@@ -1,0 +1,52 @@
+@use 'sass:math';
+$imgWidth: 300px;
+$imgHeight: 400px;
+
+body {
+  background-color: #000;
+  /* 景深 */
+  perspective: 2000px;
+}
+
+.photo-wall {
+  width: 100vw;
+  height: 100vh;
+  transform-style: preserve-3d;
+
+  img {
+    position: absolute;
+    width: $imgWidth;
+    height: $imgHeight;
+    left: 50%;
+    top: 50%;
+    // margin-left: -$imgWidth / 2;
+    // margin-top: -$imgHeight / 2;
+    transform: translate(-50%, -50%) translate3d(0, 0, -500px);
+    // 图片背面不可见
+    backface-visibility: hidden;
+    opacity: .5;
+    transition: opacity .2s;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    // 图片个数
+    $n: 10;
+    // 半径
+    $r: 500px;
+    $pDeg: math.div(360deg, $n);
+
+    @for $i from 1 through $n {
+      &:nth-child(#{$i}) {
+        $d: $i * $pDeg;
+        $x: $r * sin($d);
+        $z: $r * cos($d);
+        // 图片背面反转可见
+        transform: translate3d(calc(-50% + #{$x}), 0, #{$z}) rotateY(calc(180deg + #{$d}));
+      }
+
+    }
+  }
+}
+
