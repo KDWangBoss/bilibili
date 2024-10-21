@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS瀑流布局</title>
+</head>
+<body>
+  <div id="container">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+    <img src="https://picsum.photos/seed/picsum/200/600">
+    <img src="https://picsum.photos/seed/picsum/200/400">
+    <img src="https://picsum.photos/seed/picsum/200/800">
+    <img src="https://picsum.photos/seed/picsum/200/400">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+    <img src="https://picsum.photos/seed/picsum/200/800">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+    <img src="https://picsum.photos/seed/picsum/200/600">
+    <img src="https://picsum.photos/seed/picsum/200/200">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+    <img src="https://picsum.photos/seed/picsum/200/50">
+    <img src="https://picsum.photos/seed/picsum/200/400">
+    <img src="https://picsum.photos/seed/picsum/200/600">
+    <img src="https://picsum.photos/seed/picsum/200/300">
+
+    <style>
+      #container {
+        /* display: grid; */
+        /* grid-template-columns: repeat(4, 1fr); */
+        /* 当前只支持火狐浏览器，并且需要打开layout.css.grid-template-masonry-value.enabled */
+        /* grid-template-rows: masonry; */
+        /* gap: 10px; */
+
+        /* 兼容谷歌浏览器，但是顺序有问题，是垂直顺序排列，如果对顺序没有要求可以用这个 */
+        column-count: 4;
+        column-gap: 10px;
+      }
+      img {
+        width: 100%;
+        display: block;
+        padding: 5px 0;
+      }
+    </style>
+  </div>
+</body>
+</html>
