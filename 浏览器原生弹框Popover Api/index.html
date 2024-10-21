@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浏览器原生弹框Popover Api</title>
+
+  <button popovertarget="testpopover" popovertargetaction="show">点击</button>
+
+  <!-- popover不赋值为auto，点击外边会关闭popover manual自定义隐藏才会关闭弹框 -->
+  <div id="testpopover" popover="manual">
+    <div class="popovercontainer">
+      <button class="popoverclose" popovertarget="testpopover" popovertargetaction="hide" >
+        <span aria-hidden="true">点我关闭弹框</span>
+      </button>
+    </div>
+  </div>
+</head>
+<body>
+  <style>
+    #testpopover {
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .popovercontainer {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popoverclose {
+      width: fit-content;
+      color: #fff;
+      background: #000;
+      padding: 5px;
+      cursor: pointer;
+    }
+  </style>
+  
+</body>
+</html>
