@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Houdini</title>
+</head>
+<body>
+  <div class="card">
+    <div class="content"></div>
+  </div>
+  <style>
+    @property --direc {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    .card {
+      margin: auto;
+      --direc: 0deg;
+      width: 200px;
+      height: 400px;
+      display: flex;
+      padding: 4px;
+      color: red;
+      font-size: 2rem;
+      background-image: linear-gradient(var(--direc), #5ddcff, #3c67e3 43%, #4e00c2);
+      animation: rotate 3s linear infinite;
+      border-radius: 20px;
+    }
+
+    .content {
+      flex: 1;
+      background: #1f1f1f;
+      border-radius: 20px;
+    }
+
+    @keyframes rotate {
+      to {
+        --direc: 360deg;
+      }
+    }
+  </style>
+</body>
+</html>
