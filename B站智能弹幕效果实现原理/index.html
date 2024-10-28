@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>B站智能弹幕效果实现原理</title>
+</head>
+<body>
+  <div class="container">
+    <div class="video"></div>
+    <div class="test"></div>
+  </div>
+
+  <style>
+    .container {
+      width: 400px;
+      height: 300px;
+      position: relative;
+    }
+    .video {
+      width: 100%;
+      height: 100%;
+      background: #fc5e56;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .test {
+      width: 100%;
+      height: 100%;
+      /* background: #abcde5; */
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  </style>
+  <script>
+    const img = 'data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPSIxLjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKIHdpZHRoPSI2NjhweCIgc3R5bGU9InRyYW5zZm9ybTpzY2FsZSgxLDEuMDAxKTsiIGhlaWdodD0iMzc1Ljc1cHgiIHZpZXdCb3g9IjAgMCAzMjAuMDAwMDAwIDE4MC4wMDAwMDAiCiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJ4TWlkWU1pZCBtZWV0Ij4KPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wMDAwMDAsMTgwLjAwMDAwMCkgc2NhbGUoMC4xMDAwMDAsLTAuMTAwMDAwKSIKZmlsbD0iIzAwMDAwMCIgc3Ryb2tlPSJub25lIj4KPHBhdGggZD0iTTAgOTA1IGwwIC04OTUgNTg4IDEgYzMyMyAxIDU3MSA1IDU1MiA5IGwtMzUgNyAzMyAyIGM0OSAyIDM4IDMwIC0xOSA1MCAtMTExCjM4IC0xODggNzYgLTE5MyA5NiAtMTQgNDkgLTYgMTg1IDEzIDIyNyA0NCAxMDAgNjEgMTQ5IDg3IDI1MyA0NiAxODkgNzAgMjE1CjI5NSAzMjYgOTIgNDUgMTM5IDg1IDEzOSAxMTYgMCAxOSAtMjkgODEgLTUxIDExMSAtMTkgMjUgLTM3IDIyNSAtMjQgMjgxIDkKNDAgNDQgODIgMTAxIDEyMSA0MCAyNyA1MyAzMCAxMTkgMzAgNjkgMCA3NiAtMiAxMjIgLTM3IDY1IC00OSA3OSAtNjcgOTgKLTEyMiAxMiAtMzcgMTMgLTU4IDUgLTEwMCAtNSAtMzAgLTEwIC03NSAtMTAgLTEwMSAwIC0zNyAtNiAtNTUgLTI5IC04MyAtMTUKLTIwIC0zNCAtNTAgLTQxIC02NyAtMjAgLTQ5IDggLTc3IDEzMSAtMTMwIDEzMiAtNTggMTkzIC0xMTYgMjUxIC0yNDAgNjcKLTE0MyAxMjggLTQ1MyAxMjggLTY0OSBsMCAtMTAxIDQ3MCAwIDQ3MCAwIDAgODk1IDAgODk1IC0xNjAwIDAgLTE2MDAgMCAwCi04OTV6Ii8+CjwvZz4KPC9zdmc+Cg=='
+  </script>
+</body>
+</html>
