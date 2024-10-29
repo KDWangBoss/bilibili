@@ -10,10 +10,22 @@
     <div class="content"></div>
   </div>
   <style>
+    body {
+      background: #20212f;  
+    }
+    
+    /*
+     * 应用场景
+     * 
+     * 动画和过渡：当需要在动画或过渡中使用自定义属性时，@property 使得这些属性可以顺利地进行插值计算
+     * 动态主题：在实现主题切换时，可以定义动态变化的属性，增强用户体验
+     * 
+     * 有兼容性问题
+     */
     @property --direc {
-      syntax: '<angle>';
-      initial-value: 0deg;
-      inherits: false;
+      syntax: '<angle>'; /* 属性类型,length,color,angle */
+      initial-value: 0deg; /* 初始值 */
+      inherits: false; /* 是否继承 */
     }
 
     .card {
@@ -27,13 +39,13 @@
       font-size: 2rem;
       background-image: linear-gradient(var(--direc), #5ddcff, #3c67e3 43%, #4e00c2);
       animation: rotate 3s linear infinite;
-      border-radius: 20px;
+      border-radius: 4px;
     }
 
     .content {
       flex: 1;
-      background: #1f1f1f;
-      border-radius: 20px;
+      background: #20212f;
+      border-radius: 4px;
     }
 
     @keyframes rotate {
