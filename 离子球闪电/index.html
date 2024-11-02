@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>离子球闪电</title>
+    <style>
+      * {
+        margin: 0;
+      }
+
+      body {
+        background-image: linear-gradient(200deg, #a12580 0%, #4620ad 40%, #5406b9 60%, #a12580 100%);
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script>
+    
+    // const vAngle = Math.random() * 2 * Math.PI
+    // let particles = []
+    
+    class Particle {
+      #colours = ['#EFC8ED', '#E7E4F8', '#fff']
+      
+      constructor(canvas, window) {
+        this.window = window
+        canvas.width = window.innerHeight / 2
+        canvas.height = canvas.width
+        this.canvas = canvas
+        this.ctx = canvas.getContext('2d')
+        // 绘制的小球
+        this.particles = []
+        this.animate()
+      }
+      
+      animate = () => {
+        this.draw()
+        requestAnimationFrame(this.animate)
+      }
+      
+      draw() {
+        // 清除画布
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        // source-over 表示新的图形将绘制在现有图形之上。这是默认的合成模式。在这种模式下，新绘制的内容将覆盖下方的内容，但不影响下方的内容本身。
+        // destination-over 新图形绘制在已有图形下方。
+        // source-in 新图形只在已有图形的交集区域内绘制
+        // destination-out 从已有图形中擦除新图形的部分。
+        this.ctx.globalCompositeOperation = 'source-over'
+        this.ctx.lineWidth = this.randomNumber(0.5, 8)
+        this.ctx.strokeStyle = this.#colours[Math.floor(this.randomNumber(0, this.#colours.length))]
+        this.particles = []
+        this.createParticles()
+        this.update()
+        // this.createContainer()
+      }
+      
+      // 绘制小球
+      createParticles = () => {
+        this.ctx.beginPath()
+        // 绘制10-130个点
+        const count = this.randomNumber(10, 130)
+        for (let i = 0; i < count; i++) {
+          this.particles.push({
+            x: this.canvas.width / 2,
+            y: this.canvas.height / 2,
+            // 随机坐标点
+            velX: Math.cos(Math.random() * 2 * Math.PI),
+            velY: Math.sin(Math.random() * 2 * Math.PI),
+          })
+        }
+        
+        for (let i = 0; i < count - 1; i++) {
+          this.ctx.moveTo(this.particles[i].x, this.particles[i].y)
+          const nextX = this.particles[i].x + (this.particles[i + 1].x - this.particles[i].x) * 0.1
+          const nextY = this.particles[i].y + (this.particles[i + 1].y - this.particles[i].y) * 0.1
+          this.ctx.lineTo(nextX, nextY)
+          console.error(this.particles[i].x, this.particles[i].y, nextX, nextY)
+          this.particles[i + 1].x = nextX
+          this.particles[i + 1].y = nextY
+          this.ctx.shadowBlur = 10
+          // this.ctx.shadowColor = '#ff6ECA'
+          this.ctx.shadowColor = 'yellow'
+        }
+        this.ctx.closePath()
+        this.ctx.stroke()
+      }
+      
+      // 绘制容器（圆形区域）
+      createContainer() {
+        this.ctx.beginPath()
+        // 用来绘制完整的圆、部分圆或弧线。(圆心x坐标，圆心y坐标，半径，起始角度，结束角度， 是否逆时针)
+        this.ctx.arc(this.canvas.width / 2, this.canvas.height / 2, this.canvas.width / 2, 0, 2 * Math.PI)
+        // 此属性定义了阴影的模糊程度，值越大，阴影越模糊。相反，值为 0 时，阴影是清晰的，没有任何模糊效果
+        this.ctx.shadowBlur = 0
+        // 中心点坐标
+        const circle0X = this.canvas.width * 0.8
+        const circle0Y = this.canvas.height * 0.4
+        const circle0R = this.canvas.width * 0.15
+        // 偏移圆坐标
+        const circle1X = this.canvas.width * 0.5
+        const circle1Y = this.canvas.height * 0.5
+        const circle1R = this.canvas.width * 0.5
+        // 绘制径向渐变
+        const gradient = this.ctx.createRadialGradient(circle0X, circle0Y, circle0R, circle1X, circle1Y, circle1R)
+        // 定义渐变中的颜色停靠点
+        gradient.addColorStop(0.01, 'rgba(255, 0, 153, 0.2745)')
+        gradient.addColorStop(0.7, 'rgba(51, 0, 102, 0.0627)')
+        gradient.addColorStop(0.77, 'rgba(255, 53, 149, 0.05)')
+        gradient.addColorStop(0.91, 'rgba(255, 53, 149, 0.4)')
+        gradient.addColorStop(0.95, 'rgba(255, 53, 149, 0.6)')
+        gradient.addColorStop(1, 'rgba(255, 0, 153, 1)')
+        // 设置绘图上下文的填充样式
+        this.ctx.fillStyle = gradient
+        this.ctx.closePath()
+        // 填充路径
+        this.ctx.fill()
+      }
+      
+      // 生成一个在 min（包含）和 max（不包含）之间的随机浮点数
+      randomNumber = (min, max) => {
+        return Math.random() * (max - min) + min
+      }
+
+      update = () => {
+        this.particles.forEach((particle) => {
+          particle.velX += (1 - 2 * Math.random()) * 0.3
+          particle.velY += (1 - 2 * Math.random()) * 0.3
+          this.checkVelocity(particle)
+          this.checkBounds(particle)
+          particle.x += particle.velX
+          particle.y += particle.velY
+        })
+      }
+
+      checkVelocity = (obj) => {
+        if (obj.velX > 2.5) {
+          obj.velX = 2.5
+        } else if (obj.velX < -2.5) {
+          obj.velX = -2.5
+        }
+        if (obj.velY > 2.5) {
+          obj.velY = 2.5
+        } else if (obj.velY < -2.5) {
+          obj.velY = -2.5
+        }
+        obj.x += obj.velX
+        obj.y += obj.velY
+      }
+
+      checkBounds = (obj) => {
+        const radius = this.canvas.width / 2
+        const dx = obj.x - radius
+        const dy = obj.y - radius
+        const collision = Math.sqrt(dx * dx + dy * dy) >= radius - 10
+        if (collision) {
+          var theta = Math.atan2(dy, dx)
+          var R = radius - 10
+          obj.x = radius + R * Math.cos(theta)
+          obj.y = radius + R * Math.sin(theta)
+          obj.velX *= -1
+          obj.velY *= -1
+        }
+      }
+      
+    }
+
+    new Particle(document.getElementById('canvas'), window)
+  </script>
+</html>
