@@ -24,10 +24,6 @@
     <canvas id="canvas"></canvas>
   </body>
   <script>
-    
-    // const vAngle = Math.random() * 2 * Math.PI
-    // let particles = []
-    
     class Particle {
       #colours = ['#EFC8ED', '#E7E4F8', '#fff']
       
@@ -57,39 +53,33 @@
         this.ctx.globalCompositeOperation = 'source-over'
         this.ctx.lineWidth = this.randomNumber(0.5, 8)
         this.ctx.strokeStyle = this.#colours[Math.floor(this.randomNumber(0, this.#colours.length))]
-        this.particles = []
         this.createParticles()
-        this.update()
-        // this.createContainer()
+        this.createContainer()
       }
       
       // 绘制小球
       createParticles = () => {
         this.ctx.beginPath()
         // 绘制10-130个点
-        const count = this.randomNumber(10, 130)
+        // const count = this.randomNumber(10, 130)
+        const count = 2
         for (let i = 0; i < count; i++) {
           this.particles.push({
             x: this.canvas.width / 2,
             y: this.canvas.height / 2,
-            // 随机坐标点
-            velX: Math.cos(Math.random() * 2 * Math.PI),
-            velY: Math.sin(Math.random() * 2 * Math.PI),
           })
         }
         
         for (let i = 0; i < count - 1; i++) {
           this.ctx.moveTo(this.particles[i].x, this.particles[i].y)
-          const nextX = this.particles[i].x + (this.particles[i + 1].x - this.particles[i].x) * 0.1
-          const nextY = this.particles[i].y + (this.particles[i + 1].y - this.particles[i].y) * 0.1
-          this.ctx.lineTo(nextX, nextY)
-          console.error(this.particles[i].x, this.particles[i].y, nextX, nextY)
-          this.particles[i + 1].x = nextX
-          this.particles[i + 1].y = nextY
-          this.ctx.shadowBlur = 10
-          // this.ctx.shadowColor = '#ff6ECA'
-          this.ctx.shadowColor = 'yellow'
+          this.ctx.lineTo(this.particles[i + 1].x, this.particles[i + 1].y)
+          // 移动
+          this.move(this.particles[i], this.particles[i + 1])
         }
+        // 设置模糊度
+        this.ctx.shadowBlur = 100
+        // 绘制阴影
+        this.ctx.shadowColor = '#ff6ECA'
         this.ctx.closePath()
         this.ctx.stroke()
       }
@@ -129,48 +119,42 @@
       randomNumber = (min, max) => {
         return Math.random() * (max - min) + min
       }
-
-      update = () => {
-        this.particles.forEach((particle) => {
-          particle.velX += (1 - 2 * Math.random()) * 0.3
-          particle.velY += (1 - 2 * Math.random()) * 0.3
-          this.checkVelocity(particle)
-          this.checkBounds(particle)
-          particle.x += particle.velX
-          particle.y += particle.velY
-        })
-      }
-
-      checkVelocity = (obj) => {
-        if (obj.velX > 2.5) {
-          obj.velX = 2.5
-        } else if (obj.velX < -2.5) {
-          obj.velX = -2.5
+      // 粒子移动
+      move = (particle, nextParticle) => {
+        let vx = Math.cos(Math.random() * 2 * Math.PI)
+        let vy = Math.sin(Math.random() * 2 * Math.PI)
+        if (vx > 2) {
+          vx = 2
         }
-        if (obj.velY > 2.5) {
-          obj.velY = 2.5
-        } else if (obj.velY < -2.5) {
-          obj.velY = -2.5
+        if (vx < -2) {
+          vx = -2
         }
-        obj.x += obj.velX
-        obj.y += obj.velY
-      }
-
-      checkBounds = (obj) => {
-        const radius = this.canvas.width / 2
-        const dx = obj.x - radius
-        const dy = obj.y - radius
-        const collision = Math.sqrt(dx * dx + dy * dy) >= radius - 10
-        if (collision) {
-          var theta = Math.atan2(dy, dx)
-          var R = radius - 10
-          obj.x = radius + R * Math.cos(theta)
-          obj.y = radius + R * Math.sin(theta)
-          obj.velX *= -1
-          obj.velY *= -1
+        if (vy > 2) {
+          vy = 2
         }
-      }
+        if (vy < -2) {
+          vy = -2
+        }
+        // 方向，碰撞到球要反向
+        // const R = this.canvas.width / 2
+        // const X = particle.x - R
+        // const Y = particle.y - R
+        // // 超过半径-10时判定为碰撞
+        // const _R = R - 10
+        // const isCollision = Math.sqrt(X * X + Y * Y) >= _R
+        // let VX = 0
+        // let VY = 0
+        // // console.error('是否碰撞了：', isCollision)
+        // if (isCollision) {
+        //   const theta = Math.atan2(Y, X)
+        //   particle.x = this.#speed * Math.cos(theta)
+        //   particle.y = this.#speed * Math.sin(theta)
+        //   this.#direction *= -1
+        // }
       
+        nextParticle.x += vx
+        nextParticle.y += vy
+      }
     }
 
     new Particle(document.getElementById('canvas'), window)
