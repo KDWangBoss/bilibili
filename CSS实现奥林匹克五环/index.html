@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS实现奥林匹克五环</title>
+
+  <style>
+    .rings {
+      display: flex;
+      flex-wrap: wrap;
+      width: 400px;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+    .ring {
+      width: 100px;
+      height: 100px;
+      border: 10px solid #3884c2;
+      border-radius: 50%;
+    }
+    .ring:nth-child(2) {
+      border-color: black;
+    }
+    .ring:nth-child(3) {
+      border-color: red;
+    }
+    .ring:nth-child(4) {
+      border-color: yellow;
+      margin-top: -50px;
+      transform: rotateX(1deg);
+      transform-origin: center 25%;
+    }
+    .ring:nth-child(5) {
+      border-color: green;
+      margin-top: -50px;
+      transform: rotateX(1deg);
+    }
+  </style>
+</head>
+<body>
+  <div class="rings">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+  </div>
+</body>
+</html>
