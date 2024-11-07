@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多次触发动画结束事件</title>
+
+  <style>
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .ball {
+      width: 200px;
+      height: 200px;
+      background: #f00;
+      /* 复合属性会导致输出执行5次 */
+      transition: 0.5s;
+    }
+    .ball:hover {
+      transform: scale(1.5);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="ball"></div>
+
+  <script>
+    var ball = document.querySelector('.ball');
+    ball.addEventListener('transitionend', debounce(function() {
+      console.log('transitionend');
+    }, 100));
+    function debounce(fn, delay = 500) {
+      let timer = null;
+      return function() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, delay);
+      }
+    }
+  </script>
+</body>
+</html>
